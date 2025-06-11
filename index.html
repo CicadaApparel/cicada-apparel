@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cicada Apparel - Future Fashion</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --transition: all 0.3s ease;
+      --primary-color: #1d1d1f;
+      --secondary-color: #f5f5f7;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--primary-color);
+      background-image: url('light-mode-bg.jpg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      transition: var(--transition);
+      line-height: 1.6;
+    }
+
+    body.dark-mode {
+      color: var(--secondary-color);
+      background-image: url('dark-mode-bg.jpg');
+    }
+
+    .top-strip {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 10px;
+      background-color: white;
+      z-index: 100;
+      transition: var(--transition);
+    }
+
+    body.dark-mode .top-strip {
+      background-color: black;
+    }
+
+    .background-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backdrop-filter: blur(8px);
+      background: rgba(255, 255, 255, 0.15);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    body.dark-mode .background-overlay {
+      backdrop-filter: none;
+      background: none;
+    }
+
+    header.glass-panel {
+      position: fixed;
+      top: 10px;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      z-index: 10;
+      margin: 0 20px;
+      background: rgba(255, 255, 255, 0.1); /* Αύξηση διαφάνειας */
+      border-radius: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, 0.6),
+        0 8px 32px 0 rgba(31, 38, 135, 0.1);
+      backdrop-filter: blur(15px) saturate(180%);
+      -webkit-backdrop-filter: blur(15px) saturate(180%);
+      transition: var(--transition);
+    }
+
+    body.dark-mode header.glass-panel {
+      background: rgba(28, 28, 30, 0.1); /* Αύξηση διαφάνειας */
+      border: 0.5px solid rgba(255, 255, 255, 0.3);
+      box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1), 0 4px 12px rgba(255, 255, 255, 0.05);
+    }
+
+    header.glass-panel::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.4), transparent);
+      border-radius: 48px 0 0 48px;
+      pointer-events: none;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 300;
+      font-size: 24px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      color: inherit;
+      text-transform: lowercase;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: inherit;
+      position: relative;
+      font-weight: 300;
+      padding: 8px 0;
+    }
+
+    nav a:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: currentColor;
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover:after {
+      width: 100%;
+    }
+
+    .theme-toggle {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+      z-index: 11;
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(15deg) scale(1.1);
+    }
+
+    .theme-toggle svg {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+
+    .theme-toggle .sun {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .theme-toggle .moon {
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    body.dark-mode .theme-toggle {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .theme-toggle .sun {
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    body.dark-mode .theme-toggle .moon {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .language-toggle {
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: var(--transition);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      color: var(--primary-color); /* Χρώμα ανάλογα με το mode */
+    }
+
+    body.dark-mode .language-toggle {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--secondary-color); /* Χρώμα ανάλογα με το mode */
+    }
+
+    .language-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 300;
+      margin: 0 0 20px;
+      animation: fadeInUp 1s ease;
+    }
+
+    .hero p {
+      font-size: clamp(16px, 3vw, 20px);
+      max-width: 600px;
+      margin-bottom: 40px;
+      font-weight: 300;
+      padding: 20px;
+      border-radius: 14px;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    .products {
+      padding: 100px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .product-card {
+      background: transparent;
+      padding: 30px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      z-index: -1;
+      transition: var(--transition);
+    }
+
+    .product-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .product-card:hover::before {
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode .product-card::before {
+      background: rgba(28, 28, 30, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    body.dark-mode .product-card:hover::before {
+      background: rgba(28, 28, 30, 0.5);
+      box-shadow: 0 15px 30px rgba(255, 255, 255, 0.05);
+    }
+
+    .product-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      transition: var(--transition);
+    }
+
+    .product-card:hover .product-image {
+      transform: scale(1.03);
+    }
+
+    .product-title {
+      font-size: 18px;
+      font-weight: 400;
+      margin: 0 0 10px;
+    }
+
+    .product-price {
+      font-size: 16px;
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      padding: 12px 30px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      color: #000000;
+      text-decoration: none;
+      font-weight: 400;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: rgba(30, 30, 30, 0.25);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    body.dark-mode .btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      color: #1d1d1f;
+      box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    footer {
+      padding: 60px 40px;
+      text-align: center;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-section {
+      max-width: 800px;
+      margin: 0 auto 100px;
+      padding: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      z-index: -1;
+    }
+
+    body.dark-mode .contact-section::before {
+      background: rgba(28, 28, 30, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .form-group label {
+      font-weight: 400;
+    }
+
+    .form-control {
+      padding: 12px 20px;
+      border-radius: 30px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.8);
+      font-family: 'DM Sans', sans-serif;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: #1d1d1f;
+      box-shadow: 0 0 0 2px rgba(29, 29, 31, 0.2);
+    }
+
+    body.dark-mode .form-control {
+      background: rgba(28, 28, 30, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--secondary-color);
+    }
+
+    body.dark-mode .form-control:focus {
+      border-color: #f5f5f7;
+      box-shadow: 0 0 0 2px rgba(245, 245, 247, 0.2);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .section-title {
+      font-size: 32px;
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: #1d1d1f;
+    }
+
+    body.dark-mode .section-title::after {
+      background: #f5f5f7;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: inherit;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 12;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+
+    body.dark-mode .mobile-menu-btn {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .mobile-menu-btn:hover {
+      transform: scale(1.1);
+    }
+
+    .mobile-nav {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 70%;
+      height: 100vh;
+      padding: 80px 30px;
+      transition: var(--transition);
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px) saturate(180%);
+      -webkit-backdrop-filter: blur(15px) saturate(180%);
+      border-left: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: -8px 0 32px 0 rgba(31, 38, 135, 0.1);
+    }
+
+    body.dark-mode .mobile-nav {
+      background: rgba(28, 28, 30, 0.95);
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: -8px 0 32px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .mobile-nav.active {
+      right: 0;
+    }
+
+    .mobile-nav ul {
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 1024px) {
+      nav ul { gap: 15px; }
+    }
+
+    @media (max-width: 768px) {
+      header.glass-panel {
+        padding: 15px 20px;
+        margin: 0 10px;
+      }
+      
+      .desktop-nav {
+        display: none;
+      }
+      
+      .mobile-menu-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .header-controls {
+        gap: 10px; /* Μικρότερο gap για mobile */
+      }
+      
+      .hero {
+        padding-top: 80px;
+      }
+      
+      .products {
+        padding: 60px 20px;
+      }
+      
+      .contact-section {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-strip"></div>
+  <div class="background-overlay"></div>
+
+  <header class="glass-panel">
+    <a href="/" class="logo">Cicada Apparel</a>
+    <nav class="desktop-nav">
+      <ul>
+        <li><a href="#products" data-en="Collections" data-el="Συλλογές">Collections</a></li>
+        <li><a href="#about" data-en="About" data-el="Σχετικά">About</a></li>
+        <li><a href="#journal" data-en="Journal" data-el="Ημερολόγιο">Journal</a></li>
+        <li><a href="#contact" data-en="Contact" data-el="Επικοινωνία">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="header-controls">
+      <button class="language-toggle" onclick="toggleLanguage()">EL</button>
+      <div class="theme-toggle" onclick="toggleTheme()">
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/>
+          <line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/>
+          <line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </div>
+      <button class="mobile-menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" id="mobileNav">
+    <ul>
+      <li><a href="#products" data-en="Collections" data-el="Συλλογές">Collections</a></li>
+      <li><a href="#about" data-en="About" data-el="Σχετικά">About</a></li>
+      <li><a href="#journal" data-en="Journal" data-el="Ημερολόγιο">Journal</a></li>
+      <li><a href="#contact" data-en="Contact" data-el="Επικοινωνία">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <h1 data-en="Welcome" data-el="Καλώς ήρθατε">Welcome</h1>
+      <p class="glass-panel" data-en="We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. Our name carries more than a season. It carries a signal — a quiet call to those who listen deeper." 
+         data-el="Είμαστε η Cicada — γεννημένοι κάτω από τον ελληνικό ήλιο, εμπνευσμένοι από τον ήχο του καλοκαιριού και τις σιωπές ανάμεσά του. Το όνομά μας κουβαλάει κάτι περισσότερο από μια εποχή. Είναι ένα σήμα — ένα διακριτικό κάλεσμα για εκείνους που ακούν πιο βαθιά.">
+        We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. Our name carries more than a season. It carries a signal — a quiet call to those who listen deeper.
+      </p>
+      <a href="#products" class="btn" data-en="Explore Collection" data-el="Εξερεύνησε τη Συλλογή">Explore Collection</a>
+    </section>
+
+    <section id="products" class="products">
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Tech Jacket"/>
+        <h3 class="product-title" data-en="Jacket" data-el="Σακάκι">Jacket</h3>
+        <p class="product-price">€54.50</p>
+        <a href="#" class="btn" data-en="Buy Now" data-el="Αγόρασε Τώρα">Buy Now</a>
+      </div>
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1542068829-1115f7259450?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Smart Sneakers"/>
+        <h3 class="product-title" data-en="T-Shirt" data-el="T-Shirt">T-Shirt</h3>
+        <p class="product-price">€27.50</p>
+        <a href="#" class="btn" data-en="Buy Now" data-el="Αγόρασε Τώρα">Buy Now</a>
+      </div>
+      <div class="product-card">
+        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Augmented Hoodie"/>
+        <h3 class="product-title" data-en="Hoodie" data-el="Φούτερ">Hoodie</h3>
+        <p class="product-price">€58.50</p>
+        <a href="#" class="btn" data-en="Buy Now" data-el="Αγόρασε Τώρα">Buy Now</a>
+      </div>
+    </section>
+
+    <section id="about" class="contact-section">
+      <h2 class="section-title" data-en="About Cicada" data-el="Σχετικά με την Cicada">About Cicada</h2>
+      <p style="text-align: center; max-width: 600px; margin: 0 auto 40px;" 
+         data-en="We craft garments that breathe with the body and echo with meaning. From organic cotton to recycled threads, our fabrics respect the earth — and your skin. Each collection is an experience, designed not only to be worn, but to be discovered. Sometimes, meaning hides beneath the surface. Sometimes, your next reward is waiting — if you look closely. Cicada is fashion for those who feel the heat, hear the hum, and see the clue." 
+         data-el="Δημιουργούμε ρούχα που αναπνέουν με το σώμα και αντηχούν με νόημα. Από οργανικό βαμβάκι μέχρι ανακυκλωμένες ίνες, τα υφάσματά μας σέβονται τη γη — και το δέρμα σου. Κάθε συλλογή είναι εμπειρία. Δεν φοριέται απλώς — ανακαλύπτεται. Κάποιες φορές, το νόημα κρύβεται κάτω από την επιφάνεια. Κάποιες φορές, η επόμενη σου ανταμοιβή είναι εκεί — αν ξέρεις πού να κοιτάξεις. Η Cicada είναι μόδα για εκείνους που νιώθουν τη ζέστη, ακούν το τζιτζίκι και βλέπουν το στοιχείο.">
+        We craft garments that breathe with the body and echo with meaning. From organic cotton to recycled threads, our fabrics respect the earth — and your skin. Each collection is an experience, designed not only to be worn, but to be discovered. Sometimes, meaning hides beneath the surface. Sometimes, your next reward is waiting — if you look closely. Cicada is fashion for those who feel the heat, hear the hum, and see the clue.
+      </p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+        <div class="glass-panel" style="padding: 30px; border-radius: 16px;">
+          <h3 style="margin-top: 0;" data-en="Sustainability" data-el="Βιωσιμότητα">Sustainability</h3>
+          <p data-en="We use 100% recycled materials and biodegradable smart fibers that decompose within 6 months." 
+             data-el="Χρησιμοποιούμε 100% ανακυκλωμένα υλικά και βιοδιασπώμενα έξυπνα ίνες που αποσυντίθενται εντός 6 μηνών.">
+            We use 100% recycled materials and biodegradable smart fibers that decompose within 6 months.
+          </p>
+        </div>
+        <div class="glass-panel" style="padding: 30px; border-radius: 16px;">
+          <h3 style="margin-top: 0;" data-en="Technology" data-el="Τεχνολογία">Technology</h3>
+          <p data-en="Our garments feature nano-coatings that regulate temperature and repel stains without chemicals." 
+             data-el="Τα ρούχα μας διαθέτουν νανο-επιχρίσματα που ρυθμίζουν τη θερμοκρασία και απωθούν λεκέδες χωρίς χημικά.">
+            Our garments feature nano-coatings that regulate temperature and repel stains without chemicals.
+          </p>
+        </div>
+        <div class="glass-panel" style="padding: 30px; border-radius: 16px;">
+          <h3 style="margin-top: 0;" data-en="Ethics" data-el="Ηθική">Ethics</h3>
+          <p data-en="Every piece is crafted in solar-powered facilities with fair wages and safe working conditions." 
+             data-el="Κάθε κομμάτι κατασκευάζεται σε εγκαταστάσεις με ηλιακή ενέργεια, με δίκαιες αμοιβές και ασφαλείς συνθήκες εργασίας.">
+            Every piece is crafted in solar-powered facilities with fair wages and safe working conditions.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+      <h2 class="section-title" data-en="Get In Touch" data-el="Επικοινωνία">Get In Touch</h2>
+      <form class="contact-form">
+        <div class="form-group">
+          <label for="name" data-en="Name" data-el="Όνομα">Name</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email" data-en="Email" data-el="Ηλεκτρονικό Ταχυδρομείο">Email</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="message" data-en="Message" data-el="Μήνυμα">Message</label>
+          <textarea id="message" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn" style="justify-self: center;" data-en="Send Message" data-el="Αποστολή Μηνύματος">Send Message</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="glass-panel">
+    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+      <a href="#" style="color: inherit; font-size: 20px;"><i class="fab fa-instagram"></i></a>
+      <a href="#" style="color: inherit; font-size: 20px;"><i class="fab fa-twitter"></i></a>
+      <a href="#" style="color: inherit; font-size: 20px;"><i class="fab fa-pinterest"></i></a>
+    </div>
+    <p>&copy; 2025 Cicada Apparel. All rights reserved.</p>
+    <p style="font-size: 14px; margin-top: 10px;">Designed with ❤️ in Paleochora</p>
+  </footer>
+
+  <script>
+    // Theme toggle
+    function toggleTheme() {
+      document.body.classList.toggle('dark-mode');
+      const isDarkMode = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDarkMode);
+    }
+    
+    // Mobile menu toggle
+    function toggleMenu() {
+      const nav = document.getElementById('mobileNav');
+      nav.classList.toggle('active');
+    }
+    
+    // Language toggle
+    function toggleLanguage() {
+      const currentLang = document.documentElement.lang;
+      const newLang = currentLang === 'en' ? 'el' : 'en';
+      document.documentElement.lang = newLang;
+      
+      // Update all elements with data attributes
+      document.querySelectorAll('[data-en], [data-el]').forEach(el => {
+        if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+          el.placeholder = el.getAttribute(`data-${newLang}`);
+        } else {
+          el.textContent = el.getAttribute(`data-${newLang}`);
+        }
+      });
+      
+      // Update language toggle button (αντίστροφη λογική)
+      const langToggle = document.querySelector('.language-toggle');
+      langToggle.textContent = newLang === 'en' ? 'EL' : 'EN';
+      
+      // Save preference to localStorage
+      localStorage.setItem('language', newLang);
+    }
+    
+    // Check for saved preferences on load
+    window.addEventListener('DOMContentLoaded', () => {
+      // Theme
+      if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+      }
+      
+      // Language
+      const savedLang = localStorage.getItem('language') || 'en';
+      if (savedLang !== 'en') {
+        document.documentElement.lang = savedLang;
+        const langToggle = document.querySelector('.language-toggle');
+        langToggle.textContent = 'EN'; // Αντίστροφη λογική
+        toggleLanguage(); // This will update all texts
+      }
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          // Close mobile menu if open
+          const nav = document.getElementById('mobileNav');
+          nav.classList.remove('active');
+          
+          window.scrollTo({
+            top: targetElement.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+    
+    // Form submission
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const message = document.documentElement.lang === 'en' ? 
+          'Thank you for your message! We will get back to you soon.' :
+          'Ευχαριστούμε για το μήνυμά σας! Θα επικοινωνήσουμε σύντομα μαζί σας.';
+        alert(message);
+        this.reset();
+      });
+    }
+  </script>
+
+</body>
+</html>
