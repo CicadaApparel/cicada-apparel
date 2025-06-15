@@ -174,15 +174,6 @@ body.dark-mode .language-toggle {
   font-weight: 500;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.lang-code.spinning {
-  animation: spin 0.5s ease-in-out;
-}
-
 .theme-toggle {
   width: 48px;
   height: 48px;
@@ -382,6 +373,15 @@ footer {
   font-weight: 300;
   position: relative;
   z-index: 1;
+}
+
+footer a {
+  transition: var(--transition);
+}
+
+footer a:hover {
+  transform: scale(1.2);
+  opacity: 0.8;
 }
 
 .contact-section {

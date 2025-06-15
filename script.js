@@ -11,20 +11,15 @@ function toggleMenu() {
   nav.classList.toggle('active');
 }
 
-// Language toggle
+// Language toggle (ΧΩΡΙΣ spin animation)
 function toggleLanguage() {
   const langCode = document.querySelector('.lang-code');
-  
-  // Spin animation
-  langCode.classList.add('spinning');
-  setTimeout(() => langCode.classList.remove('spinning'), 500);
-
-  // Language switch logic
   const currentLang = document.documentElement.lang;
   const newLang = currentLang === 'en' ? 'el' : 'en';
-  document.documentElement.lang = newLang;
   
-  // Update all elements with data attributes
+  document.documentElement.lang = newLang;
+  langCode.textContent = newLang === 'en' ? 'EL' : 'EN';
+  
   document.querySelectorAll('[data-en], [data-el]').forEach(el => {
     if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
       el.placeholder = el.getAttribute(`data-${newLang}`);
@@ -33,27 +28,21 @@ function toggleLanguage() {
     }
   });
   
-  // Update language code (EL/EN)
-  langCode.textContent = newLang === 'en' ? 'EL' : 'EN';
-  
-  // Save preference
   localStorage.setItem('language', newLang);
 }
 
 // Check for saved preferences on load
 window.addEventListener('DOMContentLoaded', () => {
-  // Theme
   if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
   }
   
-  // Language
   const savedLang = localStorage.getItem('language') || 'en';
   if (savedLang !== 'en') {
     document.documentElement.lang = savedLang;
     const langCode = document.querySelector('.lang-code');
     langCode.textContent = savedLang === 'en' ? 'EL' : 'EN';
-    toggleLanguage(); // This will update all texts
+    toggleLanguage(); // Αυτό ενημερώνει όλα τα κείμενα
   }
 });
 
@@ -61,7 +50,6 @@ window.addEventListener('DOMContentLoaded', () => {
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
-    
     const targetId = this.getAttribute('href');
     if (targetId === '#') return;
     
