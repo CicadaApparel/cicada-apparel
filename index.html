@@ -45,6 +45,10 @@
           <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
         </svg>
       </div>
+      <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-bag"></i>
+        <span id="cartCount" class="cart-count"></span>
+      </div>
       <button class="mobile-menu-btn" onclick="toggleMenu()">
         <i class="fas fa-bars"></i>
       </button>
@@ -59,6 +63,21 @@
       <li><a href="#contact" data-en="Contact" data-el="Επικοινωνία">Contact</a></li>
     </ul>
   </nav>
+
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3 data-en="Your Cart" data-el="Το Καλάθι Σας">Your Cart</h3>
+      <button class="close-cart" onclick="toggleCart()">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <div class="cart-total">
+        <span data-en="Total:" data-el="Σύνολο:">Total:</span>
+        <span id="cartTotal">€0.00</span>
+      </div>
+      <button class="btn checkout-btn" data-en="Checkout" data-el="Αγορά">Checkout</button>
+    </div>
+  </div>
 
   <main>
     <section class="hero">
@@ -75,19 +94,19 @@
         <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Tech Jacket"/>
         <h3 class="product-title" data-en="Jacket" data-el="Σακάκι">Jacket</h3>
         <p class="product-price">€54.50</p>
-        <a href="#" class="btn" data-en="Buy Now" data-el="Αγόρασε Τώρα">Buy Now</a>
+        <a href="#" class="btn add-to-cart" data-en="Add to Cart" data-el="Προσθήκη στο Καλάθι">Add to Cart</a>
       </div>
       <div class="product-card">
         <img src="https://images.unsplash.com/photo-1542068829-1115f7259450?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Smart Sneakers"/>
         <h3 class="product-title" data-en="T-Shirt" data-el="T-Shirt">T-Shirt</h3>
         <p class="product-price">€27.50</p>
-        <a href="#" class="btn" data-en="Buy Now" data-el="Αγόρασε Τώρα">Buy Now</a>
+        <a href="#" class="btn add-to-cart" data-en="Add to Cart" data-el="Προσθήκη στο Καλάθι">Add to Cart</a>
       </div>
       <div class="product-card">
         <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Augmented Hoodie"/>
         <h3 class="product-title" data-en="Hoodie" data-el="Φούτερ">Hoodie</h3>
         <p class="product-price">€58.50</p>
-        <a href="#" class="btn" data-en="Buy Now" data-el="Αγόρασε Τώρα">Buy Now</a>
+        <a href="#" class="btn add-to-cart" data-en="Add to Cart" data-el="Προσθήκη στο Καλάθι">Add to Cart</a>
       </div>
     </section>
 
@@ -125,7 +144,7 @@
 
     <section id="contact" class="contact-section">
       <h2 class="section-title" data-en="Get In Touch" data-el="Επικοινωνία">Get In Touch</h2>
-      <form class="contact-form">
+      <form class="contact-form" id="contactForm">
         <div class="form-group">
           <label for="name" data-en="Name" data-el="Όνομα">Name</label>
           <input type="text" id="name" class="form-control" required>
