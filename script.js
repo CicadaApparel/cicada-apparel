@@ -13,6 +13,13 @@ function toggleMenu() {
 
 // Language toggle
 function toggleLanguage() {
+  const langCode = document.querySelector('.lang-code');
+  
+  // Spin animation
+  langCode.classList.add('spinning');
+  setTimeout(() => langCode.classList.remove('spinning'), 500);
+
+  // Language switch logic
   const currentLang = document.documentElement.lang;
   const newLang = currentLang === 'en' ? 'el' : 'en';
   document.documentElement.lang = newLang;
@@ -26,11 +33,10 @@ function toggleLanguage() {
     }
   });
   
-  // Update language toggle button (αντίστροφη λογική)
-  const langToggle = document.querySelector('.language-toggle');
-  langToggle.textContent = newLang === 'en' ? 'EL' : 'EN';
+  // Update language code (EL/EN)
+  langCode.textContent = newLang === 'en' ? 'EL' : 'EN';
   
-  // Save preference to localStorage
+  // Save preference
   localStorage.setItem('language', newLang);
 }
 
@@ -45,8 +51,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const savedLang = localStorage.getItem('language') || 'en';
   if (savedLang !== 'en') {
     document.documentElement.lang = savedLang;
-    const langToggle = document.querySelector('.language-toggle');
-    langToggle.textContent = 'EN'; // Αντίστροφη λογική
+    const langCode = document.querySelector('.lang-code');
+    langCode.textContent = savedLang === 'en' ? 'EL' : 'EN';
     toggleLanguage(); // This will update all texts
   }
 });
@@ -61,7 +67,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     
     const targetElement = document.querySelector(targetId);
     if (targetElement) {
-      // Close mobile menu if open
       const nav = document.getElementById('mobileNav');
       nav.classList.remove('active');
       
