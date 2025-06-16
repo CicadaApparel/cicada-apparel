@@ -7,9 +7,54 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Temporary splash screen styles */
+    body {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1d1d1f;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 0.5s ease;
+    }
+    .splash-logo {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 3rem;
+      color: #f5f5f7;
+      margin-bottom: 30px;
+    }
+    .splash-loader {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      border-top-color: #4285f4;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+
+  <!-- Splash Screen -->
+  <div class="splash-screen">
+    <div class="splash-logo">Cicada</div>
+    <div class="splash-loader"></div>
+  </div>
 
   <div class="top-strip"></div>
   <div class="background-overlay"></div>
@@ -64,6 +109,7 @@
     </ul>
   </nav>
 
+  <!-- Shopping Cart Panel -->
   <div class="cart-panel" id="cartPanel">
     <div class="cart-header">
       <h3 data-en="Your Cart" data-el="Το Καλάθι Σας">Your Cart</h3>
@@ -79,37 +125,56 @@
     </div>
   </div>
 
+  <!-- Product Image Gallery -->
+  <div class="product-gallery" id="productGallery">
+    <button class="close-gallery">&times;</button>
+    <img src="" alt="" class="gallery-image">
+    <div class="gallery-controls">
+      <button class="prev-btn"><i class="fas fa-chevron-left"></i></button>
+      <button class="next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+
   <main>
+    <!-- Hero Section with Parallax -->
     <section class="hero">
-      <h1 data-en="Welcome" data-el="Καλώς ήρθατε">Welcome</h1>
-      <p class="glass-panel" data-en="We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. Our name carries more than a season. It carries a signal — a quiet call to those who listen deeper." 
-         data-el="Είμαστε η Cicada — γεννημένοι κάτω από τον ελληνικό ήλιο, εμπνευσμένοι από τον ήχο του καλοκαιριού και τις σιωπές ανάμεσά του. Το όνομά μας κουβαλάει κάτι περισσότερο από μια εποχή. Είναι ένα σήμα — ένα διακριτικό κάλεσμα για εκείνους που ακούν πιο βαθιά.">
-        We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. Our name carries more than a season. It carries a signal — a quiet call to those who listen deeper.
-      </p>
-      <a href="#products" class="btn" data-en="Explore Collection" data-el="Εξερεύνησε τη Συλλογή">Explore Collection</a>
+      <div class="parallax-bg"></div>
+      <div class="hero-content">
+        <h1 data-en="Welcome" data-el="Καλώς ήρθατε">Welcome</h1>
+        <p class="glass-panel" data-en="We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. Our name carries more than a season. It carries a signal — a quiet call to those who listen deeper." 
+           data-el="Είμαστε η Cicada — γεννημένοι κάτω από τον ελληνικό ήλιο, εμπνευσμένοι από τον ήχο του καλοκαιριού και τις σιωπές ανάμεσά του. Το όνομά μας κουβαλάει κάτι περισσότερο από μια εποχή. Είναι ένα σήμα — ένα διακριτικό κάλεσμα για εκείνους που ακούν πιο βαθιά.">
+          We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. Our name carries more than a season. It carries a signal — a quiet call to those who listen deeper.
+        </p>
+        <a href="#products" class="btn" data-en="Explore Collection" data-el="Εξερεύνησε τη Συλλογή">Explore Collection</a>
+      </div>
     </section>
 
+    <!-- Products Section -->
     <section id="products" class="products">
       <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1551232864-3f0890e580d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Tech Jacket"/>
+        <img src="images/jacket.jpg" class="product-image" alt="Tech Jacket"/>
         <h3 class="product-title" data-en="Jacket" data-el="Σακάκι">Jacket</h3>
         <p class="product-price">€54.50</p>
+        <button class="quick-view-btn" data-en="Quick View" data-el="Γρήγορη Προβολή">Quick View</button>
         <a href="#" class="btn add-to-cart" data-en="Add to Cart" data-el="Προσθήκη στο Καλάθι">Add to Cart</a>
       </div>
       <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1542068829-1115f7259450?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Smart Sneakers"/>
+        <img src="images/tshirt.jpg" class="product-image" alt="Smart T-Shirt"/>
         <h3 class="product-title" data-en="T-Shirt" data-el="T-Shirt">T-Shirt</h3>
         <p class="product-price">€27.50</p>
+        <button class="quick-view-btn" data-en="Quick View" data-el="Γρήγορη Προβολή">Quick View</button>
         <a href="#" class="btn add-to-cart" data-en="Add to Cart" data-el="Προσθήκη στο Καλάθι">Add to Cart</a>
       </div>
       <div class="product-card">
-        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" class="product-image" alt="Augmented Hoodie"/>
+        <img src="images/hoodie.jpg" class="product-image" alt="Augmented Hoodie"/>
         <h3 class="product-title" data-en="Hoodie" data-el="Φούτερ">Hoodie</h3>
         <p class="product-price">€58.50</p>
+        <button class="quick-view-btn" data-en="Quick View" data-el="Γρήγορη Προβολή">Quick View</button>
         <a href="#" class="btn add-to-cart" data-en="Add to Cart" data-el="Προσθήκη στο Καλάθι">Add to Cart</a>
       </div>
     </section>
 
+    <!-- About Section -->
     <section id="about" class="contact-section">
       <h2 class="section-title" data-en="About Cicada" data-el="Σχετικά με την Cicada">About Cicada</h2>
       <p style="text-align: center; max-width: 600px; margin: 0 auto 40px;" 
@@ -142,6 +207,7 @@
       </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact" class="contact-section">
       <h2 class="section-title" data-en="Get In Touch" data-el="Επικοινωνία">Get In Touch</h2>
       <form class="contact-form" id="contactForm">
