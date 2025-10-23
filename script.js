@@ -67,7 +67,8 @@ function toggleLanguage() {
   setTimeout(() => {
     document.documentElement.lang = newLang;
     if (langCodeEl) {
-      langCodeEl.textContent = newLang === 'en' ? 'EN' : 'EL';
+      // ΔΙΟΡΘΩΣΗ: Τώρα δείχνει τη γλώσσα ΠΡΟΣ την οποία θα αλλάξει
+      langCodeEl.textContent = newLang === 'en' ? 'EL' : 'EN';
     }
     
     document.querySelectorAll('[data-en], [data-el]').forEach(el => {
@@ -360,10 +361,24 @@ document.addEventListener('DOMContentLoaded', () => {
   if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
   }
+  
+  // ΔΙΟΡΘΩΣΗ: Ρύθμισε το κουμπί να δείχνει τη σωστή γλώσσα από την αρχή
   const savedLang = localStorage.getItem('language') || 'en';
   document.documentElement.lang = savedLang;
+  
+  const langCodeEl = document.querySelector('.lang-code');
+  if (langCodeEl) {
+    langCodeEl.textContent = savedLang === 'en' ? 'EL' : 'EN';
+  }
+  
   if (savedLang !== 'en') {
-    toggleLanguage();
+    // Αν η αποθηκευμένη γλώσσα είναι ελληνικά, κάνε toggle χωρίς animation
+    document.querySelectorAll('[data-en], [data-el]').forEach(el => {
+      const text = el.getAttribute('data-el');
+      if (text !== null) {
+        el.textContent = text;
+      }
+    });
   }
 
   // 3. Initialize all functionalities
