@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Cicada Apparel - Future Fashion</title>
   
+  <!-- Meta Enhancements -->
+  <meta name="description" content="Cicada Apparel - Born under the Greek sun. Sustainable, tech-infused fashion for those who listen deeper.">
+  <meta name="keywords" content="fashion, sustainable, tech apparel, Greek, cicada, clothing">
+  <meta property="og:title" content="Cicada Apparel - Future Fashion">
+  <meta property="og:description" content="Sustainable, tech-infused fashion born under the Greek sun.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./images/hero-bg.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+  
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;700&display=swap" rel="stylesheet" />
   
@@ -35,6 +46,23 @@
     <div class="splash-loader"></div>
   </div>
 
+  <!-- ADMIN MODAL -->
+  <div id="adminModal" class="admin-modal">
+    <div class="admin-modal-content">
+      <div class="admin-header">
+        <h2>🔐 Cicada Admin Panel</h2>
+        <button class="close-admin" onclick="closeAdminModal()">&times;</button>
+      </div>
+      <div class="admin-actions">
+        <button class="btn" onclick="exportOrders()">📤 Export Orders</button>
+        <button class="btn" onclick="clearAllOrders()">🗑️ Clear All</button>
+      </div>
+      <div class="orders-container" id="adminOrdersContainer">
+        <!-- Orders will appear here -->
+      </div>
+    </div>
+  </div>
+
   <div class="background-overlay"></div>
 
   <header class="glass-panel">
@@ -47,11 +75,11 @@
       </ul>
     </nav>
     <div class="header-controls">
-      <button class="language-toggle" onclick="toggleLanguage()">
+      <button class="language-toggle" onclick="enhancedToggleLanguage()">
         <span class="for-label">FOR</span>
         <span class="lang-code">EN</span>
       </button>
-      <div class="theme-toggle" onclick="toggleTheme()">
+      <div class="theme-toggle" onclick="enhancedToggleTheme()">
         <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
@@ -91,7 +119,7 @@
         <span data-en="Total:" data-el="Σύνολο:">Total:</span>
         <span id="cartTotal">€0.00</span>
       </div>
-      <button class="btn checkout-btn" data-en="Checkout" data-el="Αγορά">Checkout</button>
+      <button class="btn checkout-btn" onclick="checkout()" data-en="Checkout" data-el="Αγορά">Checkout</button>
     </div>
   </div>
 
@@ -108,11 +136,11 @@
     <section id="hero" class="hero">
       <div class="parallax-bg"></div>
       <div class="hero-content">
-        <h1 data-en="Welcome" data-el="Καλώς ήρθατε">Welcome</h1>
+        <h1 data-en="Welcome to cicada" data-el="Καλώς ήρθατε στη cicada">Welcome to cicada</h1>
         <p class="glass-panel" 
-           data-en="We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. It's a quiet call to those who listen deeper." 
-           data-el="Είμαστε η Cicada — γεννημένοι κάτω από τον ελληνικό ήλιο, εμπνευσμένοι από τον ήχο του καλοκαιριού. Είναι ένα διακριτικό κάλεσμα για εκείνους που ακούν πιο βαθιά.">
-          We are cicada — born under the Greek sun, inspired by the sound of summer and the silence between. It's a quiet call to those who listen deeper.
+           data-en="Born under the Greek sun, we believe in the beauty of details and in the story whispered by every fabric. cicada is an experience that begins with a garment and continues through sensation — touch, light, and silence. We don't follow seasons — we create rhythms. For those who choose to listen a little more closely." 
+           data-el="Γεννημένοι κάτω από τον ελληνικό ήλιο, πιστεύουμε στην ομορφιά των λεπτομερειών και στην ιστορία που ψιθυρίζει κάθε ύφασμα. Η cicada είναι μια εμπειρία που ξεκινά με ένα ρούχο και συνεχίζει μέσα από την αίσθηση∙ την αφή, το φως, τη σιωπή. Δεν ακολουθούμε εποχές — δημιουργούμε ρυθμούς. Για εκείνους που επιλέγουν να ακούν λίγο πιο προσεκτικά.">
+          Born under the Greek sun, we believe in the beauty of details and in the story whispered by every fabric. cicada is an experience that begins with a garment and continues through sensation — touch, light, and silence. We don't follow seasons — we create rhythms. For those who choose to listen a little more closely.
         </p>
         <a href="#products" class="btn" data-en="Explore Collection" data-el="Εξερεύνησε τη Συλλογή">Explore Collection</a>
       </div>
@@ -147,27 +175,27 @@
     </section>
 
     <section id="about" class="about-section">
-      <h2 class="section-title" data-en="Our Ethos" data-el="Το Ήθος Μας">Our Ethos</h2>
+      <h2 class="section-title" data-en="Our Philosophy" data-el="Η Φιλοσοφία μας">Our Philosophy</h2>
       <div class="ethos-cards">
         <div class="glass-panel ethos-card">
-          <h3 data-en="Sustainable Fabrics" data-el="Βιώσιμα Υφάσματα">Sustainable Fabrics</h3>
-          <p data-en="100% recycled materials and biodegradable smart fibers that decompose within 6 months." 
-             data-el="100% ανακυκλωμένα υλικά και βιοδιασπώμενα έξυπνα ίνες που αποσυντίθενται εντός 6 μηνών.">
-            100% recycled materials and biodegradable smart fibers that decompose within 6 months.
+          <h3 data-en="Natural Harmony" data-el="Φυσική Αρμονία">Natural Harmony</h3>
+          <p data-en="Behind every garment lies time, care, and people who love what they do. We work in small batches, with attention to detail and respect for process — not for speed. We use organic cotton for its purity and the way it feels on the skin, because we believe that true quality is not only seen — it's felt first." 
+             data-el="Πίσω από κάθε ρούχο υπάρχει χρόνος, φροντίδα και άνθρωποι που αγαπούν αυτό που κάνουν. Δουλεύουμε σε μικρές σειρές, με προσοχή στη λεπτομέρεια και σεβασμό στη διαδικασία — όχι στην ταχύτητα. Χρησιμοποιούμε οργανικό βαμβάκι για την καθαρότητά του και την αίσθησή του στο δέρμα, γιατί πιστεύουμε πως η ποιότητα φαίνεται, αλλά πρώτα απ' όλα αισθάνεται.">
+            Behind every garment lies time, care, and people who love what they do. We work in small batches, with attention to detail and respect for process — not for speed. We use organic cotton for its purity and the way it feels on the skin, because we believe that true quality is not only seen — it's felt first.
           </p>
         </div>
         <div class="glass-panel ethos-card">
-          <h3 data-en="Advanced Technology" data-el="Προηγμένη Τεχνολογία">Advanced Technology</h3>
-          <p data-en="Our garments feature nano-coatings that regulate temperature and repel stains without chemicals." 
-             data-el="Τα ρούχα μας διαθέτουν νανο-επιχρίσματα που ρυθμίζουν τη θερμοκρασία και απωθούν λεκέδες χωρίς χημικά.">
-            Our garments feature nano-coatings that regulate temperature and repel stains without chemicals.
+          <h3 data-en="The Beauty of Simplicity" data-el="Η Ομορφιά της Απλότητας">The Beauty of Simplicity</h3>
+          <p data-en="We believe in simplicity that becomes luxury when it's genuine. In garments that don't try to impress, but to express. In clean lines, natural textures, and the quiet spaces between details. For us, beauty is not something you see — it's something you feel. This is our statement — quiet, yet true." 
+             data-el="Πιστεύουμε στην απλότητα που γίνεται πολυτέλεια όταν είναι αυθεντική. Στα ρούχα που δεν προσπαθούν να εντυπωσιάσουν, αλλά να εκφράσουν. Στις καθαρές γραμμές, στις φυσικές υφές, στις σιωπές ανάμεσα στις λεπτομέρειες. Για εμάς, η ομορφιά δεν είναι κάτι που φαίνεται∙ είναι κάτι που νιώθεις. Αυτό είναι το δικό μας statement — χαμηλόφωνο, αλλά αληθινό.">
+            We believe in simplicity that becomes luxury when it's genuine. In garments that don't try to impress, but to express. In clean lines, natural textures, and the quiet spaces between details. For us, beauty is not something you see — it's something you feel. This is our statement — quiet, yet true.
           </p>
         </div>
         <div class="glass-panel ethos-card">
-          <h3 data-en="Ethical Production" data-el="Ηθική Παραγωγή">Ethical Production</h3>
-          <p data-en="Every piece is crafted in solar-powered facilities with fair wages and safe working conditions." 
-             data-el="Κάθε κομμάτι κατασκευάζεται σε εγκαταστάσεις με ηλιακή ενέργεια, με δίκαιες αμοιβές και ασφαλείς συνθήκες εργασίας.">
-            Every piece is crafted in solar-powered facilities with fair wages and safe working conditions.
+          <h3 data-en="Living Experience — Honest Creation" data-el="Ζωντανή Εμπειρία — Ειλικρινής Δημιουργία">Living Experience — Honest Creation</h3>
+          <p data-en="cicada doesn't just sell clothes; it creates experiences. Small moments that continue beyond the purchase — through touch, movement, and light. Pieces that are not merely worn, but that connect. With oneself. With the day. With the summer that never ends." 
+             data-el="Η cicada δεν πουλά απλώς ρούχα∙ δημιουργεί εμπειρίες. Μικρές στιγμές που συνεχίζονται μετά την αγορά — μέσα από την αφή, την κίνηση, το φως. Ρούχα που δεν φοριούνται απλώς, αλλά συνδέουν. Με τον εαυτό. Με τη μέρα. Με το καλοκαίρι που δεν τελειώνει.">
+            cicada doesn't just sell clothes; it creates experiences. Small moments that continue beyond the purchase — through touch, movement, and light. Pieces that are not merely worn, but that connect. With oneself. With the day. With the summer that never ends.
           </p>
         </div>
       </div>
